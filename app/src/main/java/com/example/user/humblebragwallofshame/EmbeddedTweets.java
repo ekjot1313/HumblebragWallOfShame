@@ -71,7 +71,10 @@ Uri uri;
         ct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+
+
+
+               selectImage();
               //  final Card card = new Card.AppCardBuilder(EmbeddedTweets.this)
                //         .imageUri(uri)
                 //        .build();
@@ -84,7 +87,7 @@ Uri uri;
                         .createIntent();
                 startActivity(intent);
 */
-                Toast.makeText(EmbeddedTweets.this,"Success ",Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -213,8 +216,16 @@ Uri uri;
 
 
     @Override
-    protected void onActivityResult(int aRequestCode, int aResultCode, Intent aData) {//
-        if(aRequestCode==PICK_IMAGE_REQUEST) {
+    protected void onActivityResult(int aRequestCode, int aResultCode, Intent aData) {
+
+        if(aRequestCode==11){
+            if(aResultCode==RESULT_OK){Toast.makeText(this,"Successfully Tweeted. ",Toast.LENGTH_LONG).show();}
+            else{Toast.makeText(this,"Failure. ",Toast.LENGTH_LONG).show();}
+
+        }
+
+
+        else if(aRequestCode==PICK_IMAGE_REQUEST) {
             if (aResultCode == RESULT_OK) {
                 try {
                     handleUserPickedImage(aData);
@@ -253,16 +264,16 @@ Uri uri;
         uri=selectedImageUri;
 
 
-        TweetComposer.Builder builder = new TweetComposer.Builder(EmbeddedTweets.this)
+
+        Intent i = new TweetComposer.Builder(EmbeddedTweets.this)
                 .text("just setting up my Fabric.")
-                .image(uri);
-        builder.show();
+                .image(uri)
+                .createIntent();
+
+        startActivityForResult(i,11);
 
 
 
-
-
-//THUMBNAIL_SIZE
 
     }
 
