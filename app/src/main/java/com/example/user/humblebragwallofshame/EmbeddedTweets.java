@@ -71,11 +71,11 @@ Uri uri;
         ct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  selectImage();
+                selectImage();
               //  final Card card = new Card.AppCardBuilder(EmbeddedTweets.this)
                //         .imageUri(uri)
                 //        .build();
-                final TwitterSession session = TwitterCore.getInstance().getSessionManager()
+              /*  final TwitterSession session = TwitterCore.getInstance().getSessionManager()
                         .getActiveSession();
                 final Intent intent = new ComposerActivity.Builder(EmbeddedTweets.this)
                         .session(session)
@@ -83,8 +83,8 @@ Uri uri;
                         .darkTheme()
                         .createIntent();
                 startActivity(intent);
-
-
+*/
+                Toast.makeText(EmbeddedTweets.this,"Success ",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -251,6 +251,8 @@ Uri uri;
             selectedImageUri = (aData == null ? null : aData.getData());
         }
         uri=selectedImageUri;
+
+
         TweetComposer.Builder builder = new TweetComposer.Builder(EmbeddedTweets.this)
                 .text("just setting up my Fabric.")
                 .image(uri);
@@ -263,8 +265,6 @@ Uri uri;
 //THUMBNAIL_SIZE
 
     }
-
-
 
 
 }
