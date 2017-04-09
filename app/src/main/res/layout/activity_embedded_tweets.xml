@@ -7,34 +7,30 @@
     tools:context="com.example.user.humblebragwallofshame.EmbeddedTweets">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="368dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
-
-
     <view
         android:id="@+id/swipe_layout"
         class="android.support.v4.widget.SwipeRefreshLayout"
         id="@+id/swipe_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rv">
+        tools:layout_editor_absoluteY="8dp">
 
         <ListView
             android:id="@+id/lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="24dp"
             tools:layout_editor_absoluteY="8dp" />
+
+
+
+
     </view>
+
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/composetweet"
@@ -47,5 +43,6 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/tw__composer_logo_blue" />
+        app:srcCompat="@drawable/tw__composer_logo_blue"
+        android:layout_marginEnd="8dp" />
 </android.support.constraint.ConstraintLayout>

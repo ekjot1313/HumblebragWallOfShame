@@ -17,11 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="dde50136ffab56bf63cea08fc5f135db15428ed1" />
 
-        <activity android:name=".EmbeddedTweets"></activity>
+        <activity android:name=".EmbeddedTweets" />
+        <activity android:name=".ComposeTweetActivity"></activity>
     </application>
 
 </manifest>

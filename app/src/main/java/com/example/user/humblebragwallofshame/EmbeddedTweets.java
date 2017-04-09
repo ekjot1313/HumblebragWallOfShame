@@ -1,12 +1,16 @@
 package com.example.user.humblebragwallofshame;
 // EmbeddedTweetsActivity
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthException;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.StatusesService;
 import com.twitter.sdk.android.tweetcomposer.Card;
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
@@ -15,6 +19,7 @@ import com.twitter.sdk.android.tweetui.BaseTweetView;
 import com.twitter.sdk.android.tweetui.CollectionTimeline;
 import com.twitter.sdk.android.tweetui.CompactTweetView;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.TweetUtils;
@@ -41,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -63,9 +69,9 @@ Uri uri;
 
         FloatingActionButton ct=(FloatingActionButton)findViewById(R.id.composetweet);
         final ListView lv=(ListView)findViewById(R.id.lv);
-        RecyclerView rv=(RecyclerView)findViewById(R.id.rv);
+       // RecyclerView rv=(RecyclerView)findViewById(R.id.rv);
         final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
-        final List<Long> tweetIds = Arrays.asList(510908133917487104L);
+
 
 
         ct.setOnClickListener(new View.OnClickListener() {
@@ -93,15 +99,19 @@ Uri uri;
         });
 
 
-        UserTimeline timeline = new UserTimeline.Builder().screenName("humblebrag").build();
+        UserTimeline timeline = new UserTimeline.Builder().maxItemsPerRequest(100).screenName("humblebrag").build();
+
        // SearchTimeline timeline = new SearchTimeline.Builder().query("@humblebrag").build();
         //final CollectionTimeline timeline = new CollectionTimeline.Builder().id(214680621l).build();
 
-        final TweetTimelineListAdapter timelineAdapter = new TweetTimelineListAdapter(this, timeline) {
+
+        final TweetAdapter timelineAdapter = new TweetAdapter(this, timeline) /*{
+
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView( int position, View convertView, ViewGroup parent) {
                 View rowView = convertView;
                 final Tweet tweet = getItem(position);
+                User user=tweet.user;
                 if (rowView == null) {
                     rowView = new CompactTweetView(context, tweet, R.style.tw__TweetDarkWithActionsStyle);
                 } else {
@@ -109,7 +119,10 @@ Uri uri;
                 }
                 return rowView;
             }
-        };
+
+
+        }*/;
+
 
         lv.setAdapter(timelineAdapter);
 
@@ -276,6 +289,9 @@ Uri uri;
 
 
     }
+
+
+
 
 
 }
