@@ -23,7 +23,8 @@
             android:value="dde50136ffab56bf63cea08fc5f135db15428ed1" />
 
         <activity android:name=".EmbeddedTweets" />
-        <activity android:name=".ComposeTweetActivity"></activity>
+        <activity android:name=".ComposeTweetActivity" />
+        <activity android:name=".UserInfo"></activity>
     </application>
 
 </manifest>

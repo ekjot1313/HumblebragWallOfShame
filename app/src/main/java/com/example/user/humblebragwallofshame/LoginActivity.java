@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TWITTER_SECRET = "wm8m7BEfMhcdAfU4e14nvfzu5rbxA3blRtXfw1ryar4nWDIKrC";
     private TwitterLoginButton loginButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +30,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+
+
+
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {

@@ -18,12 +18,14 @@ import com.twitter.sdk.android.tweetcomposer.TweetUploadService;
 import com.twitter.sdk.android.tweetui.BaseTweetView;
 import com.twitter.sdk.android.tweetui.CollectionTimeline;
 import com.twitter.sdk.android.tweetui.CompactTweetView;
+import com.twitter.sdk.android.tweetui.FixedTweetTimeline;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.Timeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.TweetUtils;
 import com.twitter.sdk.android.tweetui.TweetView;
+import com.twitter.sdk.android.tweetui.TwitterListTimeline;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import android.content.BroadcastReceiver;
@@ -41,9 +43,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,9 +59,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class EmbeddedTweets extends AppCompatActivity {
 Uri uri;
-
+     static TweetTimelineListAdapter[] adapter = new TweetTimelineListAdapter[1];
 
 
     @Override
@@ -68,9 +74,14 @@ Uri uri;
        // final LinearLayout myLayout = (LinearLayout) findViewById(R.id.my_tweet_layout);
 
         FloatingActionButton ct=(FloatingActionButton)findViewById(R.id.composetweet);
-        final ListView lv=(ListView)findViewById(R.id.lv);
-       // RecyclerView rv=(RecyclerView)findViewById(R.id.rv);
+         final ListView lv=(ListView)findViewById(R.id.lv);
+       final RecyclerView rv=(RecyclerView)findViewById(R.id.rv);
         final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+
+rv.setLayoutManager(new LinearLayoutManager(getApplication()));
+         final TweetAdapter mTweetAdapter;
+
+      //  mTweetAdapter = new TweetAdapter(getApplication());
 
 
 
@@ -99,13 +110,19 @@ Uri uri;
         });
 
 
-        UserTimeline timeline = new UserTimeline.Builder().maxItemsPerRequest(100).screenName("humblebrag").build();
 
-       // SearchTimeline timeline = new SearchTimeline.Builder().query("@humblebrag").build();
+
+
+
+
+   //     UserTimeline timeline = new UserTimeline.Builder().maxItemsPerRequest(100).screenName("humblebrag").build();
+
+       // SearchTimeline timeline = new SearchTimeline.Builder().maxItemsPerRequest(100).query("@humblebrag").build();
         //final CollectionTimeline timeline = new CollectionTimeline.Builder().id(214680621l).build();
+       // TwitterListTimeline timeline =new TwitterListTimeline.Builder().maxItemsPerRequest(100).slugWithOwnerScreenName("heello","@humblebrag").build();
 
-
-        final TweetAdapter timelineAdapter = new TweetAdapter(this, timeline) /*{
+     //   final TweetAdapter timelineAdapter = new TweetAdapter(this, timeline);
+      /*  {
 
             @Override
             public View getView( int position, View convertView, ViewGroup parent) {
@@ -121,17 +138,53 @@ Uri uri;
             }
 
 
-        }*/;
+        };
+*/
+//lv.setAdapter(timelineAdapter);
+        //rv.setAdapter(timelineAdapter);
 
 
-        lv.setAdapter(timelineAdapter);
+
+      //  final TweetAdapter[] adapter=new TweetAdapter[1];
+        final FixedTweetTimeline[] timeline = new FixedTweetTimeline[1];
+
+        TwitterApiClient twitterApiClient = Twitter.getApiClient();
+        StatusesService statusesService = twitterApiClient.getStatusesService();
+
+        Call<List<Tweet>> call =  statusesService.userTimeline(null,"@humblebrag",100, null, null, null, null, null, null);
+        call.enqueue(new Callback<List<Tweet>>() {
+            @Override
+            public void success(Result<List<Tweet>> result) {
+                ListView listView = (ListView) findViewById(R.id.lv);
+                timeline[0] = new FixedTweetTimeline.Builder()
+                        .setTweets(result.data)
+                        .build();
+                 adapter[0] = new TweetAdapter(EmbeddedTweets.this,timeline[0]);
+
+                lv.setAdapter(adapter[0]);
+
+/*
+                if (result.data != null ){
+                    mTweetAdapter.setTweets(result.data);
+                    rv.setAdapter(mTweetAdapter);
+                }
+*/
+
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+            }
+        });
+
+
 
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(true);
-                timelineAdapter.refresh(new Callback<TimelineResult<Tweet>>() {
+                adapter[0].refresh(new Callback<TimelineResult<Tweet>>() {
                     @Override
                     public void success(Result<TimelineResult<Tweet>> result) {
                         swipeLayout.setRefreshing(false);
@@ -291,7 +344,10 @@ Uri uri;
     }
 
 
+    static TweetTimelineListAdapter getAdapter(){
 
+    return  adapter[0];
+}
 
 
 }

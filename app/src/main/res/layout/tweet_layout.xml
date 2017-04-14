@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_user_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/tw__app_info_layout_border" />
+
+        <TextView
+            android:id="@+id/tv_user_tweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_user_image"
+            android:layout_marginTop="56dp"
+            android:layout_toEndOf="@+id/tv_fav_count"
+            android:layout_toRightOf="@+id/tv_fav_count"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_retweet_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_user_name"
+            android:layout_alignRight="@+id/tv_user_name"
+            android:layout_below="@+id/tv_user_handle"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="62dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_fav_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_marginLeft="29dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/iv_user_image"
+            android:layout_toRightOf="@+id/iv_user_image"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_tweet"
+            android:layout_marginTop="77dp"
+            android:layout_toEndOf="@+id/tv_user_handle"
+            android:layout_toRightOf="@+id/tv_user_handle"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_user_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_tweet"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="175dp"
+            android:text="TextView" />
+    </RelativeLayout>
+</LinearLayout>
