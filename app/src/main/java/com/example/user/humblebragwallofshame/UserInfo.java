@@ -3,11 +3,13 @@ package com.example.user.humblebragwallofshame;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -26,7 +28,7 @@ import retrofit2.Call;
 public class UserInfo extends AppCompatActivity {
 
     TextView usernameTV,twitterHandleTV,bioTV,locationTV,followersCountTV,followingCountTV,tweetCountTV,img1,img2;
-
+ImageView imgview;
 
 
     @Override
@@ -36,7 +38,8 @@ public class UserInfo extends AppCompatActivity {
 
         int position=getIntent().getExtras().getInt("position");
 
-
+        int loader = R.drawable.tw__ic_logo_default;
+        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
 
         TweetTimelineListAdapter adapter=EmbeddedTweets.getAdapter();
 
@@ -87,8 +90,12 @@ public class UserInfo extends AppCompatActivity {
         img1.setText(""+profile_image_url);
         img2.setText(""+cover_image_url);
 
+        imgview=(ImageView)findViewById(R.id.imgview);
+       // imgLoader.DisplayImage(profile_image_url, loader, imgview);
 
-
+        Picasso.with(this)
+                .load(profile_image_url)
+                .into(imgview);
 
 
 
