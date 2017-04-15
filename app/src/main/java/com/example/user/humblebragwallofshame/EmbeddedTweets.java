@@ -151,7 +151,7 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
         TwitterApiClient twitterApiClient = Twitter.getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
 
-        Call<List<Tweet>> call =  statusesService.userTimeline(null,"@humblebrag",100, null, null, null, null, null, null);
+        Call<List<Tweet>> call =  statusesService.userTimeline(null,"@humblebrag",103, null, null, null, null, null, null);
         call.enqueue(new Callback<List<Tweet>>() {
             @Override
             public void success(Result<List<Tweet>> result) {

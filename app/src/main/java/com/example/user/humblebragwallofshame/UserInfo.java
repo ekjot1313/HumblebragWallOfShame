@@ -1,11 +1,15 @@
 package com.example.user.humblebragwallofshame;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +30,8 @@ import java.util.List;
 import retrofit2.Call;
 
 public class UserInfo extends AppCompatActivity {
+static int position;
 
-    TextView usernameTV,twitterHandleTV,bioTV,locationTV,followersCountTV,followingCountTV,tweetCountTV,img1,img2;
-ImageView imgview;
 
 
     @Override
@@ -36,70 +39,34 @@ ImageView imgview;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        int position=getIntent().getExtras().getInt("position");
+         position=getIntent().getExtras().getInt("position");
 
-        int loader = R.drawable.tw__ic_logo_default;
-        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-
-        TweetTimelineListAdapter adapter=EmbeddedTweets.getAdapter();
-
-
-
-
-        User user=adapter.getItem(position).retweetedStatus.user;
+        ViewPager vp=(ViewPager)findViewById(R.id.vp);
+        MyPagerAdapter myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(myPagerAdapter);
+vp.setCurrentItem(position);
 
 
 
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+UserInfo.position=position;
+            }
 
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-
-
-
-
-        String username=(user.name),
-                twitter_handle="@"+user.screenName,
-                bio=user.description,
-                location=user.location;
-        int
-                followers_count=user.followersCount,
-                following_count=user.friendsCount,
-                tweet_count=user.statusesCount;
-
-        String profile_image_url=user.profileImageUrl,
-                cover_image_url=user.profileBackgroundImageUrl;
-
-        usernameTV=(TextView)findViewById(R.id.usernametv);
-        twitterHandleTV=(TextView)findViewById(R.id.handletv);
-        bioTV=(TextView)findViewById(R.id.biotv);
-        locationTV=(TextView)findViewById(R.id.locationtv);
-        followersCountTV=(TextView)findViewById(R.id.followerscounttv);
-        followingCountTV=(TextView)findViewById(R.id.followingcounttv);
-        tweetCountTV=(TextView)findViewById(R.id.tweetcounttv);
-        img1=(TextView)findViewById(R.id.img1tv);
-        img2=(TextView)findViewById(R.id.img2tv);
-
-        usernameTV.setText(""+username);
-        twitterHandleTV.setText(""+twitter_handle);
-        bioTV.setText(""+bio);
-        locationTV.setText(""+location);
-        followersCountTV.setText(""+followers_count);
-        followingCountTV.setText(""+following_count);
-        tweetCountTV.setText(""+tweet_count);
-        img1.setText(""+profile_image_url);
-        img2.setText(""+cover_image_url);
-
-        imgview=(ImageView)findViewById(R.id.imgview);
-       // imgLoader.DisplayImage(profile_image_url, loader, imgview);
-
-        Picasso.with(this)
-                .load(profile_image_url)
-                .into(imgview);
-
-
-
-
+            }
+        });
 
     }
+
+
+
 }

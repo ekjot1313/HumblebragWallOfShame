@@ -25,7 +25,8 @@
 
         <activity android:name=".EmbeddedTweets" />
         <activity android:name=".ComposeTweetActivity" />
-        <activity android:name=".UserInfo"></activity>
+        <activity android:name=".UserInfo" />
+        <activity android:name=".UserFragment"></activity>
     </application>
 
 </manifest>
