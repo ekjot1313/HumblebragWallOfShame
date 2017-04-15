@@ -23,13 +23,14 @@ import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
  */
 
 class TweetAdapter extends TweetTimelineListAdapter {
-
+static int position;
     public TweetAdapter(Context context, Timeline<Tweet> timeline) {
         super(context, timeline);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        this.position=position;
         View view = super.getView(position, convertView, parent);
         view = convertView;
         final Tweet tweet = getItem(position);
@@ -85,6 +86,11 @@ class TweetAdapter extends TweetTimelineListAdapter {
 
         }
     }
+
+
+    int getPosition(){return position;}
+    void setPosition(int position){this.position=position;}
+
 
 }
 

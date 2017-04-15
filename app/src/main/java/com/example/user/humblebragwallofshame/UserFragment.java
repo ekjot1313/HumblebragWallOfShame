@@ -17,8 +17,8 @@ import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 public class UserFragment extends Fragment {
     View view;
-    TextView usernameTV,twitterHandleTV,bioTV,locationTV,followersCountTV,followingCountTV,tweetCountTV,img1,img2;
-    ImageView imgview,imgview2;
+    TextView usernameTV,twitterHandleTV,bioTV,locationTV,followersCountTV,followingCountTV,tweetCountTV;
+    ImageView profilePicIV,coverPicIV;
     TweetTimelineListAdapter adapter=EmbeddedTweets.getAdapter();;
 
 
@@ -76,8 +76,7 @@ if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweete
         followersCountTV=(TextView)view.findViewById(R.id.followerscounttv);
         followingCountTV=(TextView)view.findViewById(R.id.followingcounttv);
         tweetCountTV=(TextView)view.findViewById(R.id.tweetcounttv);
-        img1=(TextView)view.findViewById(R.id.img1tv);
-        img2=(TextView)view.findViewById(R.id.img2tv);
+
 
         usernameTV.setText(""+username);
         twitterHandleTV.setText(""+twitter_handle);
@@ -86,25 +85,25 @@ if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweete
         followersCountTV.setText(""+followers_count);
         followingCountTV.setText(""+following_count);
         tweetCountTV.setText(""+tweet_count);
-        img1.setText(""+profile_image_url);
-        img2.setText(""+cover_image_url);
 
-        imgview=(ImageView)view.findViewById(R.id.imgview);
-        imgview2=(ImageView)view.findViewById(R.id.imgview2);
+
+        profilePicIV=(ImageView)view.findViewById(R.id.profilepiciv);
+        coverPicIV=(ImageView)view.findViewById(R.id.coverpiciv);
 
         Picasso.with(view.getContext())
                 .load(profile_image_url)
                 .placeholder(R.drawable.tw__ic_logo_default) // optional
                 .error(R.drawable.tw__ic_logo_default)
-                .resize(900, 600)
-                .into(imgview);
+                .fit()
+                .transform(new RoundedCornersTransform())
+                .into(profilePicIV);
 
         Picasso.with(view.getContext())
                 .load(cover_image_url)
                 .placeholder(R.drawable.tw__ic_logo_default) // optional
                 .error(R.drawable.tw__ic_logo_default)
-                .resize(900, 600)
-                .into(imgview2);
+                .fit()
+                .into(coverPicIV);
 
 
 

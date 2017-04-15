@@ -32,7 +32,7 @@ import retrofit2.Call;
 public class UserInfo extends AppCompatActivity {
 static int position;
 
-
+    ViewPager vp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,15 @@ static int position;
 
          position=getIntent().getExtras().getInt("position");
 
-        ViewPager vp=(ViewPager)findViewById(R.id.vp);
+        vp=(ViewPager)findViewById(R.id.vp);
         MyPagerAdapter myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager());
         vp.setAdapter(myPagerAdapter);
-vp.setCurrentItem(position);
 
+        vp.setCurrentItem(position);
 
+        if (savedInstanceState != null) {
+            vp.setCurrentItem(savedInstanceState.getInt("pageItem", 0));
+        }
 
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -57,6 +60,7 @@ vp.setCurrentItem(position);
             @Override
             public void onPageSelected(int position) {
 UserInfo.position=position;
+
             }
 
             @Override
@@ -65,8 +69,14 @@ UserInfo.position=position;
             }
         });
 
+
+
     }
 
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("pageItem", vp.getCurrentItem());
+    }
 }
