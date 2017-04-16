@@ -10,7 +10,6 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
 /**

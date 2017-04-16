@@ -5,70 +5,52 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthException;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.User;
 import com.twitter.sdk.android.core.services.StatusesService;
-import com.twitter.sdk.android.tweetcomposer.Card;
-import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
-import com.twitter.sdk.android.tweetcomposer.TweetUploadService;
-import com.twitter.sdk.android.tweetui.BaseTweetView;
-import com.twitter.sdk.android.tweetui.CollectionTimeline;
-import com.twitter.sdk.android.tweetui.CompactTweetView;
 import com.twitter.sdk.android.tweetui.FixedTweetTimeline;
-import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.Timeline;
+
+
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.TweetUtils;
-import com.twitter.sdk.android.tweetui.TweetView;
-import com.twitter.sdk.android.tweetui.TwitterListTimeline;
-import com.twitter.sdk.android.tweetui.UserTimeline;
 
-import android.app.ActionBar;
-import android.content.BroadcastReceiver;
+
+
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
+
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
+
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -88,14 +70,24 @@ Uri uri;
 
 
         FloatingActionButton ct=(FloatingActionButton)findViewById(R.id.composetweet);
+
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 30);
+        myAnim.setInterpolator(interpolator);
+
+        ct.startAnimation(myAnim);
+
+
+
          final ListView lv=(ListView)findViewById(R.id.lv);
-       final RecyclerView rv=(RecyclerView)findViewById(R.id.rv);
+
         final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
 
-rv.setLayoutManager(new LinearLayoutManager(getApplication()));
          final TweetAdapter mTweetAdapter;
 
-      //  mTweetAdapter = new TweetAdapter(getApplication());
+
 
 
 
@@ -106,18 +98,6 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
 
 
                selectImage();
-              //  final Card card = new Card.AppCardBuilder(EmbeddedTweets.this)
-               //         .imageUri(uri)
-                //        .build();
-              /*  final TwitterSession session = TwitterCore.getInstance().getSessionManager()
-                        .getActiveSession();
-                final Intent intent = new ComposerActivity.Builder(EmbeddedTweets.this)
-                        .session(session)
-                  //      .card(card)
-                        .darkTheme()
-                        .createIntent();
-                startActivity(intent);
-*/
 
 
             }
@@ -129,37 +109,7 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
 
 
 
-   //     UserTimeline timeline = new UserTimeline.Builder().maxItemsPerRequest(100).screenName("humblebrag").build();
 
-       // SearchTimeline timeline = new SearchTimeline.Builder().maxItemsPerRequest(100).query("@humblebrag").build();
-        //final CollectionTimeline timeline = new CollectionTimeline.Builder().id(214680621l).build();
-       // TwitterListTimeline timeline =new TwitterListTimeline.Builder().maxItemsPerRequest(100).slugWithOwnerScreenName("heello","@humblebrag").build();
-
-     //   final TweetAdapter timelineAdapter = new TweetAdapter(this, timeline);
-      /*  {
-
-            @Override
-            public View getView( int position, View convertView, ViewGroup parent) {
-                View rowView = convertView;
-                final Tweet tweet = getItem(position);
-                User user=tweet.user;
-                if (rowView == null) {
-                    rowView = new CompactTweetView(context, tweet, R.style.tw__TweetDarkWithActionsStyle);
-                } else {
-                    ((BaseTweetView) rowView).setTweet(tweet);
-                }
-                return rowView;
-            }
-
-
-        };
-*/
-//lv.setAdapter(timelineAdapter);
-        //rv.setAdapter(timelineAdapter);
-
-
-
-      //  final TweetAdapter[] adapter=new TweetAdapter[1];
         final FixedTweetTimeline[] timeline = new FixedTweetTimeline[1];
 
         TwitterApiClient twitterApiClient = Twitter.getApiClient();
@@ -177,12 +127,6 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
 
                 lv.setAdapter(adapter[0]);
 
-/*
-                if (result.data != null ){
-                    mTweetAdapter.setTweets(result.data);
-                    rv.setAdapter(mTweetAdapter);
-                }
-*/
 
             }
 
@@ -214,21 +158,6 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
 
 
 
-       /* for (Long longvar : tweetIds) {
-            TweetUtils.loadTweet(longvar, new Callback<Tweet>() {
-                @Override
-                public void success(Result<Tweet> result) {
-                    CompactTweetView compactTweetView = new CompactTweetView(EmbeddedTweets.this, result.data,R.style.tw__TweetDarkWithActionsStyle);
-                    compactTweetView.setOnActionCallback(actionCallback);
-                    myLayout.addView(compactTweetView);
-                }
-
-                @Override
-                public void failure(TwitterException exception) {
-
-                }
-            });
-        }*/
     }
 
     // launch the login activity when a guest user tries to favorite a Tweet
@@ -346,7 +275,7 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
 
 
         Intent i = new TweetComposer.Builder(EmbeddedTweets.this)
-                .text("just setting up my Fabric.")
+                .text("Write Here.")
                 .image(uri)
                 .createIntent();
 
@@ -402,5 +331,20 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
+    }
+}
+
+class MyBounceInterpolator implements android.view.animation.Interpolator {
+    double mAmplitude = 1;
+    double mFrequency = 10;
+
+    MyBounceInterpolator(double amplitude, double frequency) {
+        mAmplitude = amplitude;
+        mFrequency = frequency;
+    }
+
+    public float getInterpolation(float time) {
+        return (float) (-1 * Math.pow(Math.E, -time/ mAmplitude) *
+                Math.cos(mFrequency * time) + 1);
     }
 }

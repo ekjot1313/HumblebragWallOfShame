@@ -29,15 +29,6 @@
     </view>
 
 
-    <view
-        android:id="@+id/rv"
-        class="android.support.v7.widget.RecyclerView"
-        id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/composetweet"

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.user.humblebragwallofshame">
+    package="com.example.user.humblebragwallofshame"
+   >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -26,9 +28,9 @@
             android:value="dde50136ffab56bf63cea08fc5f135db15428ed1" />
 
         <activity android:name=".EmbeddedTweets" />
-        <activity android:name=".ComposeTweetActivity" />
         <activity android:name=".UserInfo" />
         <activity android:name=".UserFragment"></activity>
+
     </application>
 
 </manifest>

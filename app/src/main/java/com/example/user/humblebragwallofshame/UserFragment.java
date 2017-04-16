@@ -1,15 +1,12 @@
 package com.example.user.humblebragwallofshame;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.core.models.User;
@@ -36,7 +33,6 @@ this.position=position;
         view=inflater.inflate(R.layout.activity_user_fragment, container, false);
 
         User user;
-        //Toast.makeText(getContext(),adapter.getItem(position).source,Toast.LENGTH_LONG).show();
 
 
 
@@ -44,10 +40,7 @@ this.position=position;
             user=adapter.getItem(position).retweetedStatus.user;
         }
         else{user=adapter.getItem(position).user;}
-  /*
-if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweetedStatus.user;
-    Toast.makeText(getContext(),"retweeted",Toast.LENGTH_LONG);}
-         else*/
+
 
 
 
@@ -97,7 +90,7 @@ if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweete
                 .load(profile_image_url)
                 .error(R.drawable.ic_action_name)
                 .fit()
-                .transform(new RoundedCornersTransform())
+                .transform(new RoundedCornersTransform(1f))
                 .into(profilePicIV);
 
         Picasso.with(view.getContext())
