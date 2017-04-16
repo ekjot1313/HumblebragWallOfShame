@@ -1,9 +1,11 @@
 package com.example.user.humblebragwallofshame;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -34,12 +36,28 @@ public class LoginActivity extends AppCompatActivity {
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_login);
         ImageView imgview=(ImageView)findViewById(R.id.imgview);
-Picasso.with(this)
-        .load(R.drawable.login_pic)
-        .fit()
-        .into(imgview);
+
+
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        Picasso.with(this)
+                .load(R.drawable.login_pic)
+                .fit()
+                .into(imgview,new com.squareup.picasso.Callback() {
+
+
+                    @Override
+                    public void onSuccess() {
+                        loginButton.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+
+
+                });
 
 
 
@@ -56,7 +74,7 @@ Picasso.with(this)
 
                 Intent intent=new Intent(getApplicationContext(),EmbeddedTweets.class);
                 startActivity(intent);
-
+finish();
 
             }
             @Override
@@ -75,4 +93,25 @@ Picasso.with(this)
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }

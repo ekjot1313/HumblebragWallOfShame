@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Humblebrag Wall Of Shame</string>
-    <string name="action_logout">logout</string>
+    <string name="action_logout">Logout</string>
 </resources>
