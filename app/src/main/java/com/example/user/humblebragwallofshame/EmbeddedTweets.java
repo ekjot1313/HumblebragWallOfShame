@@ -28,6 +28,7 @@ import com.twitter.sdk.android.tweetui.TweetView;
 import com.twitter.sdk.android.tweetui.TwitterListTimeline;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,6 +36,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -45,6 +48,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -71,7 +76,9 @@ Uri uri;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_embedded_tweets);
 
-       // final LinearLayout myLayout = (LinearLayout) findViewById(R.id.my_tweet_layout);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
 
         FloatingActionButton ct=(FloatingActionButton)findViewById(R.id.composetweet);
          final ListView lv=(ListView)findViewById(R.id.lv);
@@ -151,7 +158,7 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
         TwitterApiClient twitterApiClient = Twitter.getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
 
-        Call<List<Tweet>> call =  statusesService.userTimeline(null,"@humblebrag",103, null, null, null, null, null, null);
+        Call<List<Tweet>> call =  statusesService.userTimeline(null,"@humblebrag",102, null, null, null, null, null, null);
         call.enqueue(new Callback<List<Tweet>>() {
             @Override
             public void success(Result<List<Tweet>> result) {
@@ -349,5 +356,12 @@ rv.setLayoutManager(new LinearLayoutManager(getApplication()));
     return  adapter[0];
 }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
 }

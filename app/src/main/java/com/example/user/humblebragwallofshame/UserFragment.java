@@ -40,12 +40,15 @@ this.position=position;
 
 
 
-
+        if(adapter.getItem(position).retweetedStatus!=null){
+            user=adapter.getItem(position).retweetedStatus.user;
+        }
+        else{user=adapter.getItem(position).user;}
   /*
 if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweetedStatus.user;
     Toast.makeText(getContext(),"retweeted",Toast.LENGTH_LONG);}
          else*/
-        user=adapter.getItem(position).retweetedStatus.user;
+
 
 
 
@@ -92,16 +95,14 @@ if(!adapter.getItem(position).retweeted){user=adapter.getItem(position).retweete
 
         Picasso.with(view.getContext())
                 .load(profile_image_url)
-                .placeholder(R.drawable.tw__ic_logo_default) // optional
-                .error(R.drawable.tw__ic_logo_default)
+                .error(R.drawable.ic_action_name)
                 .fit()
                 .transform(new RoundedCornersTransform())
                 .into(profilePicIV);
 
         Picasso.with(view.getContext())
                 .load(cover_image_url)
-                .placeholder(R.drawable.tw__ic_logo_default) // optional
-                .error(R.drawable.tw__ic_logo_default)
+                .error(R.drawable.default_cover_img)
                 .fit()
                 .into(coverPicIV);
 
